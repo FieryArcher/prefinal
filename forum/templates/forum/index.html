@@ -1,0 +1,24 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<ul class="list-articles">
+	{% for p in posts %}
+			<li>
+                <div class="article-panel">
+                    <p class="first">Category: {{p.cat}}</p>
+                    <p class="last">Date: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+                </div>
+                <h2>{{p.title}}</h2>
+	{% autoescape on %}
+	{{p.content|linebreaks|truncatewords:50}}
+	{% endautoescape %}
+			<div class="clear"></div>
+			{% if user.is_staff %}
+                  <div class="delbut"><a href="{% url 'delete_post' p.id %}">Delete</a></div>
+                  <div class="updbut"><a href="{% url 'update_post' p.id %}">Update</a></div>
+                  {% endif %}
+			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Read</a></p>
+			</li>
+	{% endfor %}
+</ul>
+{% endblock %}

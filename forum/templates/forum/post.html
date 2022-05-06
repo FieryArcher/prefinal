@@ -1,0 +1,17 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<h1>{{post.title}}</h1>
+{{post.content|linebreaks}}
+<form method="post">
+    {% csrf_token %}
+  
+    {% if names %}
+      {% for name in names %}
+        {{ name.name }}<br>
+      {% endfor %}
+    {% endif %}
+  
+    {{ form }}
+  </form>
+{% endblock %}
